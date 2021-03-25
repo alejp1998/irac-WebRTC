@@ -3,20 +3,87 @@
 <head>
 <meta charset="utf-8"/>
 <title>DataChannel simple example</title>
-<style>
-</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.min.css" integrity="sha512-ZRv40llEogRmoWgZwnsqke3HNzJ0kiI0+pcMgiz2bxO6Ew1DVBtWjVn0qjrXdT3+u+pSN36gLgmJiiQ3cQtyzA==" crossorigin="anonymous" />
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Megrim' rel='stylesheet'>
+	<style>
+		.logo1 {
+			color : white;
+			font-family: 'Megrim';
+			font-size: 30px;
+		}
+		.navlogo {
+			background: linear-gradient(to left, white, blue);
+		}
+	</style>
 </head>
 <body>
+	<div class="wrapper">
+	<nav class="navbar navlogo logo" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item logo1" href="/">EQUIPO 37</a>
+            <div class="navbar-burger burger" data-target="navMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+            </div>
+        </div>
 
-<textarea id="dataChannelSend" disabled placeholder="1: Press Start; 2: Enter text; 3: Press Send."></textarea>
-<textarea id="dataChannelReceive" disabled></textarea>
+        <div id="navMenu" class="navbar-menu">
 
-<div id="buttons">
-    <button id="startButton">Start</button>
-    <button id="sendButton">Send</button>
-    <button id="closeButton">Stop</button>
+            <div class="navbar-start">
+
+            <div class="navbar-start">
+                <div class="navbar-item has-dropdown is-hoverable">
+                  <a class="navbar-link">Functions</a>
+                  <div class="navbar-dropdown">
+                  <a class="navbar-item" href="/cap23/getUserMedia.html">getUserMedia()</a>
+                  <a class="navbar-item" href="/cap23/LocalPeerConnection.html">localPeerConnection()</a>
+                  <a class="navbar-item" href="/cap23/dataChannel.html">dataChannel()</a>
+                  <a class="navbar-item" href="/cap5/">CompleteNodeServerWithDataChannel</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="navbar-end">
+
+            </div>
+
+        </div>
+        </nav>
+
+        <script type="text/javascript">
+        (function() {
+            var burger = document.querySelector('.burger');
+            var nav = document.querySelector('#'+burger.dataset.target);
+            burger.addEventListener('click', function(){
+            burger.classList.toggle('is-active');
+            nav.classList.toggle('is-active');
+            });
+        })();
+        </script>
+        
+	</div>
+
+<div id='mainDiv' class="box">
+    
+    <div class="columns">
+        <div class="column is-half">
+            <textarea class="input" id="dataChannelSend" disabled placeholder="1: Press Start; 2: Enter text; 3: Press Send."></textarea>
+        </div>
+        <div class="column is-half">
+            <textarea class="textarea" id="dataChannelReceive" disabled></textarea>
+        </div>
+    </div>
+    
+    <div id="buttons">
+        <button class="button" id="startButton">Start</button>
+        <button class="button" id="sendButton">Send</button>
+        <button class="button" id="closeButton">Stop</button>
+    </div>
+
 </div>
-
 <script src="js/dataChannel.js"></script>
 
 </body>

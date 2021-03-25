@@ -245,7 +245,10 @@ function sendData() {
   var data = sendTextarea.value;
   if(isInitiator) sendChannel.send(data);
   else receiveChannel.send(data);
+  receiveTextarea.innerHTML += '<p>'+ '<span class="tag is-primary">'+ data +'</span>' + '</p>';
   trace('Sent data: ' + data);
+  //Clear send data
+  sendTextarea.value = '';
 }
 
 // Handlers...
@@ -260,7 +263,7 @@ function gotReceiveChannel(event) {
 
 function handleMessage(event) {
   trace('Received message: ' + event.data);
-  receiveTextarea.value += event.data + '\n';
+  receiveTextarea.innerHTML += '<p>'+ '<span class="tag is-link">'+ event.data +'</span>' + '</p>';
 }
 
 function handleSendChannelStateChange() {

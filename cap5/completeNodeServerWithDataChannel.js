@@ -26,8 +26,7 @@ var app = https.createServer(options, function (req, res) {
 }).listen(8080);
 
 // Use socket.io JavaScript library for real-time web applications
-var server = http.createServer(app);
-var io = require('socket.io').listen(server);
+var io = require('socket.io')(app);
 
 // Let's start managing connections...
 io.sockets.on('connection', function (socket){
