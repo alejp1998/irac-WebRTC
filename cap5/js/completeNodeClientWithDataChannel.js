@@ -245,7 +245,7 @@ function sendData() {
   var data = sendTextarea.value;
   if(isInitiator) sendChannel.send(data);
   else receiveChannel.send(data);
-  receiveTextarea.innerHTML += '<p>'+ '<span class="tag is-primary">'+ data +'</span>' + '</p>';
+  receiveTextarea.innerHTML += '<div class="hero is-small is-primary"><div class="hero-body"><p class="subtitle is-6 alignright">'+ data +'</p></div></div>';
   trace('Sent data: ' + data);
   //Clear send data
   sendTextarea.value = '';
@@ -263,7 +263,7 @@ function gotReceiveChannel(event) {
 
 function handleMessage(event) {
   trace('Received message: ' + event.data);
-  receiveTextarea.innerHTML += '<p>'+ '<span class="tag is-link">'+ event.data +'</span>' + '</p>';
+  receiveTextarea.innerHTML += '<div class="hero is-small is-link"><div class="hero-body"><p class="subtitle is-6 alignleft">'+ event.data +'</p></div></div>';
 }
 
 function handleSendChannelStateChange() {
@@ -348,6 +348,51 @@ function handleRemoteStreamAdded(event) {
 function handleRemoteStreamRemoved(event) {
   console.log('Remote stream removed. Event: ', event);
 }
+
+/////////////////////////////////////////////////////////
+let file;
+	
+document.getElementById('select-file-input').addEventListener('change', (event) => {
+  file = event.target.files[0];
+  document.getElementById('ok-button').disabled = !file;
+});
+
+const shareFile = () => {
+  if (file) {
+    const channelLabel = file.name;
+    const channel = peerConnection.createDataChannel(channelLabel);
+    channel.binaryType = 'arraybuffer';
+
+    channel.onopen = async () => {
+      const arrayBuffer = await file.arrayBuffer();
+      channel.send(arrayBuffer);
+    }
+
+    channel.onclose = () => {
+      closeDialog();
+    };
+  }
+};
+
+const closeDialog = () => {
+  document.getElementById('select-file-input').value = '';
+  document.getElementById('select-file-dialog').style.display = 'none';
+};
+
+const downloadFile = (blob, fileName) => {
+  const a = document.createElement('a');
+  const url = window.URL.createObjectURL(blob);
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  window.URL.revokeObjectURL(url);
+  a.remove()
+};
+
+document.getElementById('ok-button').addEventListener('click', () => {
+  shareFile();
+});
+
 /////////////////////////////////////////////////////////
 // Clean-up functions...
 
