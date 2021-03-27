@@ -245,7 +245,16 @@ function sendData() {
   var data = sendTextarea.value;
   if(isInitiator) sendChannel.send(data);
   else receiveChannel.send(data);
-  receiveTextarea.innerHTML += '<div class="hero is-small is-primary"><div class="hero-body"><p class="subtitle is-6 alignright">'+ data +'</p></div></div>';
+  // Append styled message to html
+  receiveTextarea.innerHTML += `
+    <div class="hero is-small is-primary">
+      <div class="hero-body">
+        <p class="subtitle is-6 alignright">
+    `+ data + `
+        </p>
+      </div>
+    </div>
+  `;
   trace('Sent data: ' + data);
   //Clear send data
   sendTextarea.value = '';
@@ -261,9 +270,19 @@ function gotReceiveChannel(event) {
   receiveChannel.onclose = handleReceiveChannelStateChange;
 }
 
+// Handle received messages
 function handleMessage(event) {
   trace('Received message: ' + event.data);
-  receiveTextarea.innerHTML += '<div class="hero is-small is-link"><div class="hero-body"><p class="subtitle is-6 alignleft">'+ event.data +'</p></div></div>';
+  // Append styled message to html
+  receiveTextarea.innerHTML += `
+    <div class="hero is-small is-link">
+      <div class="hero-body">
+        <p class="subtitle is-6 alignleft">
+  `+ event.data + `
+        </p>
+      </div>
+    </div>
+  `;
 }
 
 function handleSendChannelStateChange() {
